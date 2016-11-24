@@ -1,0 +1,25 @@
+  1 ---
+  2 - hosts: dt04
+  3   gather_facts: false
+  4
+  5   tasks:
+  6     - name: Ensure the EHM service is running
+  7       service: name=ehm  state=started
+  8
+  9
+ 10   # Login to ASN of the network ...
+ 11
+ 12 - hosts: dt04
+ 13   gather_facts: false
+ 14   vars:
+ 15       ssh_user: "admin@"
+ 16       cmd_asn: "ssh"
+ 17       ssh_host: "192.168.137.4"
+ 18       ssh_port: "-p 7001 "
+ 19       ssh_password: "Admin12345"
+ 20
+ 21   tasks:
+ 22     - name: Login and pinging between ASNGW of the network
+ 23       local_action: shell cmd={{cmd_asn}} user={{ ssh_user }} host={{ ssh_host }} port={{ssh_port}} password={{ ssh_password }}  command_list={{ mylist }}
+ 24       register: pinging_result
+ 25
